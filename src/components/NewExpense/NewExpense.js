@@ -3,7 +3,7 @@ import ExpenseForm from "./ExpenseForm";
 import "./NewExpense.css";
 
 const NewExpense = (props) => {
-	const [showForm, setShowForm] = useState("no");
+	const [isEditing, setIsEditing] = useState(false);
 
 	const saveExpenseDataHandler = (enteredExpenseData) => {
 		const expenseData = {
@@ -11,26 +11,28 @@ const NewExpense = (props) => {
 			id: Math.random().toString(),
 		};
 		props.onAddExpense(expenseData);
+		setIsEditing(false);
 	};
 
-	const addExpenseHandler = () => {
-		setShowForm("yes");
-	};
-	
-	const hideExpenseHandler = () => {
-		setShowForm("no");
+	const startEditingHandler = () => {
+		setIsEditing(true);
 	};
 
-	if (showForm === "no") {
-		return (
-			<div className="new-expense">
-				<button onClick={addExpenseHandler}>Add Expense</button>
-			</div>
-		);
-	}
+	const stopEditingHandler = () => {
+		setIsEditing(false);
+	};
+
 	return (
 		<div className="new-expense">
-			<ExpenseForm onSaveExpenseData={saveExpenseDataHandler} onCancel={hideExpenseHandler} />
+			{!isEditing && (
+				<button onClick={startEditingHandler}>Add New Expense</button>
+			)}
+			{isEditing && (
+				<ExpenseForm
+					onSaveExpenseData={saveExpenseDataHandler}
+					onCancel={stopEditingHandler}
+				/>
+			)}
 		</div>
 	);
 };
