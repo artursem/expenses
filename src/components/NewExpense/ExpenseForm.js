@@ -8,15 +8,12 @@ const ExpenseForm = (props) => {
 
 	const titleChangeHandler = (e) => {
 		setEnteredTitle(e.target.value);
-		// console.log(e.target.value);
 	};
 	const amountChangeHandler = (e) => {
 		setEnteredAmount(e.target.value);
-		// console.log(e.target.value);
 	};
 	const dateChangeHandler = (e) => {
 		setEnteredDate(e.target.value);
-		// console.log(e.target.value);
 	};
 
 	const submitHandler = (event) => {
@@ -32,7 +29,12 @@ const ExpenseForm = (props) => {
 		setEnteredTitle("");
 		setEnteredAmount("");
 		setEnteredDate("");
+		hideExpenseHandler();
 	};
+
+	const hideExpenseHandler = () => {
+		props.onCancel();
+	}
 
 	return (
 		<form onSubmit={submitHandler}>
@@ -67,6 +69,7 @@ const ExpenseForm = (props) => {
 				</div>
 			</div>
 			<div className="new-expense__actions">
+				<button onClick={hideExpenseHandler}>Cancel</button>
 				<button type="submit">Add Expense</button>
 			</div>
 		</form>
